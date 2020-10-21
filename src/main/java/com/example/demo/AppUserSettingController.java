@@ -44,12 +44,8 @@ public class AppUserSettingController {
     public ResponseEntity<AppUserSettings> createSetting(@RequestParam String key, @RequestParam String value, @PathVariable(name = "userId") Long user) {
 
         AppUserSettings appUserSettings = appUserSettingsRepository.findByAppUserId(user);
-        AppUserSetting appUserSetting = new AppUserSetting();
-        appUserSetting.setKey(key);
-        appUserSetting.setValue(value);
-        appUserSetting.setAppUserSettings(appUserSettings);
-        appUserSettings.getSettings().add(appUserSetting);
 
+        appUserSettings.getSettings().put(key, value);
         appUserSettings =  appUserSettingsRepository.save(appUserSettings);
 
         return ResponseEntity.ok(appUserSettings);
